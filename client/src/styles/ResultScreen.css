@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  background-color: #3498db;
+}
+.container-result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 80%;
+  gap: 24px;
+  border-radius: 16px;
+  transition: width 2s ease;
+  background-color: #f3f3f3;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+}
