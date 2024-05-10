@@ -7,13 +7,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 4px solid #c4c4c4;
-  background-color: #252525;
-  height: 15vh;
+  height: 100px;
+  width: 100%;
+  position: fixed;
+  z-index: 4;
 }
 .container-header h1 {
   font-size: 40px;
   text-transform: uppercase;
   color: #fff;
-  letter-spacing: 8px;
+  letter-spacing: 4px;
 }
