@@ -1,31 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
+import axios from "axios";
 import "../styles/Hero.css";
 
 const Hero = () => {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
+  const [preview, setPreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      setImage(reader.result);
-    };
-    reader.readAsDataURL(file);
+    setImage(e.target.files[0]);
+    setPreview(URL.createObjectURL(e.target.files[0]));
     setIsImageUploaded(true);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setIsLoading(true);
+    const formData = new FormData();
+    formData.append("file", image);
+    await axios.post("http://localhost:5000/upload", formData).then((res) => {
+      console.log(res.data);
+    });
     setTimeout(() => {
       setIsLoading(false);
-      navigate("/result", { state: { image } });
+      navigate("/result", { state: { preview } });
     }, 2000);
   };
 
@@ -47,10 +49,10 @@ const Hero = () => {
             <label className="label-1">Upload Image</label>
           </div>
         </form>
-        {image && (
+        {preview && (
           <img
             className="image-output"
-            src={image}
+            src={preview}
             alt="Uploaded"
           />
         )}

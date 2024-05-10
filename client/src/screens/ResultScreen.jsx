@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 const ResultScreen = () => {
   const location = useLocation();
-  const image = location.state.image;
+  const image = location.state.preview;
 
   return (
     <div className="container">
