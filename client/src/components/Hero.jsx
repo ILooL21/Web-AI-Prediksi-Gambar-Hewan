@@ -22,7 +22,7 @@ const Hero = () => {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("file", image);
-    await axios.post("http://localhost:5000/upload", formData).then((res) => {
+    await axios.post("http://localhost:5000/predict", formData).then((res) => {
       console.log(res.data);
     });
     setTimeout(() => {
