@@ -3,37 +3,31 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/ResultScreen.css";
 
 const ResultScreen = () => {
-  const [predictionPercentage, setPredictionPercentage] = useState(0);
-  const [animalType, setAnimalType] = useState("");
   const [labelColor, setLabelColor] = useState("");
   const [isTeamVisible, setIsTeamVisible] = useState(false);
   const navigate = useNavigate();
 
   const location = useLocation();
   const image = location.state.preview;
+  const animalType = location.state.animalType;
+  const predictionPercentage = location.state.predictionPercentage;
 
-    const handleClick = async () => {
-      setIsTeamVisible(true);
+  const handleClick = async () => {
+    setIsTeamVisible(true);
     setTimeout(() => {
       navigate("/");
-      }, 3000);
-    };
+    }, 3000);
+  };
 
   useEffect(() => {
-    const randomPercentage = Math.floor(Math.random() * 100);
-    const randomAnimalType = randomPercentage >= 80 ? "ANJING" : "KUCING";
-    
-    setPredictionPercentage(randomPercentage);
-    setAnimalType(randomAnimalType);
-    
-    if (randomPercentage >= 80) {
+    if (predictionPercentage >= 80) {
       setLabelColor("color-green");
-    } else if (randomPercentage >= 50) {
+    } else if (predictionPercentage >= 50) {
       setLabelColor("color-yellow");
     } else {
       setLabelColor("color-red");
     }
-  }, []);
+  }, [predictionPercentage]);
 
   return (
     <div className="container">
@@ -44,13 +38,15 @@ const ResultScreen = () => {
           alt="Uploaded"
         />
         <div className="container-label-result">
-          <label className="label-result">Hasil</label>
+          <label className="label-result">Result</label>
           <div className="prediction-number">
             <label className={`label-prediction-number ${labelColor}`}>{predictionPercentage}%</label>
           </div>
-          <label className="label-result">Hewan ini adalah {animalType}</label>
-          <button onClick={handleClick} className="button-back">
-            <a>Kembali</a>
+          <label className="label-result">This image most likely belongs to the <span className="animal-name">{animalType}</span></label>
+          <button
+            onClick={handleClick}
+            className="button-back">
+            <a>Back</a>
           </button>
         </div>
       </div>
@@ -69,4 +65,3 @@ const ResultScreen = () => {
 };
 
 export default ResultScreen;
-

@@ -41,9 +41,10 @@
 .prediction-number {
   border: solid 2px #000;
   border-radius: 8px;
-  width: 120px;
+  width: 140px;
   height: 60px;
   display: flex;
+
   justify-content: center;
   align-items: center;
 }
@@ -112,4 +113,9 @@
 .team-member label {
   font-size: 20px;
   font-weight: bold;
+}
+.animal-name {
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
 }

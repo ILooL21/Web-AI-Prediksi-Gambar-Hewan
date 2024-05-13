@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
-// import axios from "axios";
+import axios from "axios";
 import "../styles/Hero.css";
 
 const Hero = () => {
@@ -18,44 +18,24 @@ const Hero = () => {
     setIsImageUploaded(true);
   };
 
-  // const handleClick = async () => {
-  //   setIsLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("file", image);
-  //   // await axios.post("http://localhost:5000/predict", formData).then((res) => {
-  //   //   console.log(res.data);
-  //   // });
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //     navigate("/result", { state: { preview } });
-  //   }, 2000);
-  // };
-
-  const handleClick = async () => {
-    try {
-      setIsLoading(true);
-      
-      const formData = new FormData();
-      formData.append("file", image);
-      
-      await sendDataToServer(formData);
-      
-      setIsLoading(false);
-      navigate("/result", { state: { preview } });
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
+  const handleClick = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("file", image);
+    await axios
+      .post("http://localhost:5000/predict", formData)
+      .then((res) => {
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate("/result", { state: { preview: preview, animalType: res.data.class, predictionPercentage: res.data.kemiripan } });
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setIsLoading(false); // Handle error case here
+      });
   };
-  
-  const sendDataToServer = async () => {
-    return new Promise((resolve, ) => {
-      setTimeout(() => {
-        resolve();
-      }, 2000);
-    });
-  };
-  
-  
 
   return (
     <div className="container-hero">
@@ -74,7 +54,11 @@ const Hero = () => {
             <label className="label-1">Or</label>
             <label className="label-1">Upload Image</label>
           </div>
-          <button className="button-input" onClick={() => inputRef.current.click()}>Select File</button>
+          <button
+            className="button-input"
+            onClick={() => inputRef.current.click()}>
+            Select File
+          </button>
         </div>
         {preview && (
           <img
@@ -89,9 +73,7 @@ const Hero = () => {
           disabled={isLoading}>
           <a href="">{isLoading ? "Uploading..." : "Predict"}</a>
         </button>
-        <div className={`a-opacity ${isLoading ? "b-opacity" : ""}`}>
-          {isLoading && <div className="loader"></div>}
-        </div>
+        <div className={`a-opacity ${isLoading ? "b-opacity" : ""}`}>{isLoading && <div className="loader"></div>}</div>
       </div>
     </div>
   );
