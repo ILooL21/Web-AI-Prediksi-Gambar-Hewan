@@ -32,22 +32,23 @@ const ResultScreen = () => {
   return (
     <div className="container">
       <div className="container-result">
-        <img
-          className="image-result"
-          src={image}
-          alt="Uploaded"
-        />
-        <div className="container-label-result">
-          <label className="label-result">Result</label>
-          <div className="prediction-number">
-            <label className={`label-prediction-number ${labelColor}`}>{predictionPercentage}%</label>
+        <div className="container-result-main">
+          <img className="image-result" src={image} alt="Uploaded" />
+          <div className="container-label-result">
+            <label className="label-result">Result</label>
+            <div className="prediction-number">
+              <label className={`label-prediction-number ${labelColor}`}>
+                {predictionPercentage}%
+              </label>
+            </div>
+            <label className="label-result">
+              This image most likely belongs to the{" "}
+              <span className="animal-name">{animalType}</span>
+            </label>
+            <button onClick={handleClick} className="button-back">
+              <a>Back</a>
+            </button>
           </div>
-          <label className="label-result">This image most likely belongs to the <span className="animal-name">{animalType}</span></label>
-          <button
-            onClick={handleClick}
-            className="button-back">
-            <a>Back</a>
-          </button>
         </div>
       </div>
       {isTeamVisible && (
