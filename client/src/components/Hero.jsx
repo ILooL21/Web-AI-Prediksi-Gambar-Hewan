@@ -24,12 +24,10 @@ const Hero = () => {
     const formData = new FormData();
     formData.append("file", image);
     await axios
-      .post("http://localhost:5000/predict", formData)
+      .post("http://localhost:8000/predict", formData)
       .then((res) => {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate("/result", { state: { preview: preview, animalType: res.data.class, predictionPercentage: res.data.kemiripan } });
-        }, 2000);
+        setIsLoading(false);
+        navigate("/result", { state: { preview: preview, animalType: res.data.class_name, predictionPercentage: res.data.kemiripan } });
       })
       .catch((error) => {
         console.error("Error:", error);

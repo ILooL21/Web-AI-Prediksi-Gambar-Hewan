@@ -8,9 +8,9 @@ const ResultScreen = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const image = location.state.preview;
-  const animalType = location.state.animalType;
-  const predictionPercentage = location.state.predictionPercentage;
+  const image = location.state?.preview;
+  const animalType = location.state?.animalType;
+  const predictionPercentage = location.state?.predictionPercentage;
 
   const handleClick = async () => {
     setIsTeamVisible(true);
@@ -20,32 +20,39 @@ const ResultScreen = () => {
   };
 
   useEffect(() => {
-    if (predictionPercentage >= 80) {
-      setLabelColor("color-green");
-    } else if (predictionPercentage >= 50) {
-      setLabelColor("color-yellow");
+    if (!location.state) {
+      navigate("/");
     } else {
-      setLabelColor("color-red");
+      if (predictionPercentage >= 80) {
+        setLabelColor("color-green");
+      } else if (predictionPercentage >= 50) {
+        setLabelColor("color-yellow");
+      } else {
+        setLabelColor("color-red");
+      }
     }
-  }, [predictionPercentage]);
+  }, [predictionPercentage, location.state, navigate]);
 
   return (
     <div className="container">
       <div className="container-result">
         <div className="container-result-main">
-          <img className="image-result" src={image} alt="Uploaded" />
+          <img
+            className="image-result"
+            src={image}
+            alt="Uploaded"
+          />
           <div className="container-label-result">
             <label className="label-result">Result</label>
             <div className="prediction-number">
-              <label className={`label-prediction-number ${labelColor}`}>
-                {predictionPercentage}%
-              </label>
+              <label className={`label-prediction-number ${labelColor}`}>{predictionPercentage}%</label>
             </div>
             <label className="label-result">
-              This image most likely belongs to the{" "}
-              <span className="animal-name">{animalType}</span>
+              This image most likely belongs to the <span className="animal-name">{animalType}</span>
             </label>
-            <button onClick={handleClick} className="button-back">
+            <button
+              onClick={handleClick}
+              className="button-back">
               <a>Back</a>
             </button>
           </div>
