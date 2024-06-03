@@ -31,7 +31,7 @@ const Hero = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        setIsLoading(false); // Handle error case here
+        setIsLoading(false);
       });
   };
 
